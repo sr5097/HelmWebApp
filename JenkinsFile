@@ -41,7 +41,7 @@ pipeline {
         //         sh 'kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n app'
         //         sh 'kubectl set image deployment/db-deployment db=salomirao/pythonapp-db:latest -n app'
         //     }
-        // }
+        }
         stage('Run Helm') {
             steps {
                 script {      
