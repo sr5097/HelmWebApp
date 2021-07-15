@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {      
                 container('helm') {
-                    sh "helm ls"
+                    sh "helm ls -n cicd"
                 }
                 }
             }
