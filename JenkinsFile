@@ -43,8 +43,9 @@ pipeline {
         //     }
         }
         stage('Run Helm') {
+            agent { label 'master' }
             steps {
-                script {      
+                withKubeConfig([credentialsId: '74f99a36-f288-4efe-a3b2-b76ed8254152']) {      
                 container('helm') {
                     sh "helm ls -n cicd"
                 }
