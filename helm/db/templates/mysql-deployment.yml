@@ -1,0 +1,42 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-helm
+  labels:
+    app: db-helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-helm
+  template:
+    metadata:
+      labels:
+        app: db-helm
+    spec:
+      containers:
+      - name: db
+        image: salomirao/pythonapp-db
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        ports:
+        - containerPort: 3306
+          name: db-helm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-helm
+  labels:
+    app: db-helm
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    name: mysql
+  selector:
+    app: db-helm
+  type: LoadBalancer
