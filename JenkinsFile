@@ -6,34 +6,34 @@ pipeline {
         GOCACHE = "/tmp"
     }
     stages{
-        stage('test pipeline') {
-            /*sh(script: """
-            echo "hello"
-            git clone https://github.com/sr5097/Kube-WebAppDeployment.git
-            cd ./app
+        // stage('test pipeline') {
+        //     /*sh(script: """
+        //     echo "hello"
+        //     git clone https://github.com/sr5097/Kube-WebAppDeployment.git
+        //     cd ./app
 
-            docker build . -t test
-            """)*/
-            steps{
-                sh "git clone https://github.com/sr5097/Kube-WebAppDeployment.git"
-                //sh "cd ./Kube-WebAppDeployment/app"
-                dir("Kube-WebAppDeployment/app"){
-                    sh "docker build . -t salomirao/pythonapp-web:latest"
-                    sh "docker build . -t salomirao/pythonapp-web:$BUILD_NUMBER"
-                }
-                dir("Kube-WebAppDeployment/db"){
-                    sh "docker build . -t salomirao/pythonapp-db:latest"
-                    sh "docker build . -t salomirao/pythonapp-db:$BUILD_NUMBER"
-                }
-                withDockerRegistry([ credentialsId: "dockerhub", url:""]){
-                    sh 'docker push salomirao/pythonapp-web'
-                    sh 'docker push salomirao/pythonapp-db'
-                    sh "docker push salomirao/pythonapp-web:$BUILD_NUMBER"
-                    sh "docker push salomirao/pythonapp-db:$BUILD_NUMBER"
-                }
-            echo "checkpoint"
-            }
-        }
+        //     docker build . -t test
+        //     """)*/
+        //     steps{
+        //         sh "git clone https://github.com/sr5097/Kube-WebAppDeployment.git"
+        //         //sh "cd ./Kube-WebAppDeployment/app"
+        //         dir("Kube-WebAppDeployment/app"){
+        //             sh "docker build . -t salomirao/pythonapp-web:latest"
+        //             sh "docker build . -t salomirao/pythonapp-web:$BUILD_NUMBER"
+        //         }
+        //         dir("Kube-WebAppDeployment/db"){
+        //             sh "docker build . -t salomirao/pythonapp-db:latest"
+        //             sh "docker build . -t salomirao/pythonapp-db:$BUILD_NUMBER"
+        //         }
+        //         withDockerRegistry([ credentialsId: "dockerhub", url:""]){
+        //             sh 'docker push salomirao/pythonapp-web'
+        //             sh 'docker push salomirao/pythonapp-db'
+        //             sh "docker push salomirao/pythonapp-web:$BUILD_NUMBER"
+        //             sh "docker push salomirao/pythonapp-db:$BUILD_NUMBER"
+        //         }
+        //     echo "checkpoint"
+        //     }
+        // }
         
         // stage("Deploy") {
         //     agent { label 'master' }
@@ -53,6 +53,7 @@ pipeline {
                     sh './kubectl get pods'
                     sh './kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n cicd'
                     sh './kubectl set image deployment/db db=salomirao/pythonapp-db:latest -n cicd'
+                    sh 'helm ls -n cicd'
                 }
             }
         }
