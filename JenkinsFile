@@ -8,7 +8,11 @@ timestamps {
       containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.10.0', command: 'cat', ttyEnabled: true),
     ]
   ) {
+      
     node ('jenkins-slave') {
+      stage('Get latest version of code') {
+        checkout scm
+      }
       
       stage("KubeCLI-test") {
             agent { label 'master' }
@@ -19,9 +23,8 @@ timestamps {
                     sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
                     sh 'chmod u+x ./kubectl'
                     sh './kubectl get pods'
-                    sh './kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n cicd'
-                    sh './kubectl set image deployment/db db=salomirao/pythonapp-db:latest -n cicd'
-                    //sh 'helm ls -n cicd'
+                    //sh './kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n cicd'
+                    //sh './kubectl set image deployment/db db=salomirao/pythonapp-db:latest -n cicd'
                 }
             }
         }
