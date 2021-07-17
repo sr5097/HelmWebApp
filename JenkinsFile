@@ -7,7 +7,7 @@ pipeline {
     }
     containers: [
       containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.10.0', command: 'cat', ttyEnabled: true),
-    ]
+    ],
 
     stages{
         // stage('test pipeline') {
