@@ -6,6 +6,7 @@ timestamps {
     inheritFrom: 'default',
     containers: [
       containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.10.0', command: 'cat', ttyEnabled: true),
+    ]
   ) {
     node ('jenkins-slave') {
       stage('Get latest version of code') {
