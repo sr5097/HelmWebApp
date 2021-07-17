@@ -9,9 +9,6 @@ timestamps {
     ]
   ) {
     node ('jenkins-slave') {
-      stage('Get latest version of code') {
-        checkout scm
-      }
       
       stage("KubeCLI-test") {
             agent { label 'master' }
@@ -24,7 +21,7 @@ timestamps {
                     sh './kubectl get pods'
                     sh './kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n cicd'
                     sh './kubectl set image deployment/db db=salomirao/pythonapp-db:latest -n cicd'
-                    sh 'helm ls -n cicd'
+                    //sh 'helm ls -n cicd'
                 }
             }
         }
