@@ -16,7 +16,7 @@ timestamps {
       
       stage("KubeCLI-test") {
             //agent { label 'master' }
-            steps{
+            //steps{
                 withKubeConfig([credentialsId: '74f99a36-f288-4efe-a3b2-b76ed8254152']) {
                     // sh 'which kubectl'
                     // echo "checkpoint"
@@ -26,7 +26,7 @@ timestamps {
                     //sh './kubectl set image deployment/web-deployment web=salomirao/pythonapp-web:latest -n cicd'
                     //sh './kubectl set image deployment/db db=salomirao/pythonapp-db:latest -n cicd'
                 }
-            }
+            //}
         }
     
       stage('Deploy Local') {
